@@ -2,107 +2,59 @@
 <html>
 <head>
   <title>Filter Carousel</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-    /* Add CSS styles for the carousel */
-    .carousel {
+        body {
+      background-color: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 400px;
-      height: 300px;
-      background-color: #f2f2f2;
-      border-radius: 10px;
-      overflow: hidden;
+      height: 100vh;
+      margin: 0;
     }
-
-    .slide {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    
+        .carousel {
+      max-width: 200px; /* Adjust the width as needed */
+      margin: 0 auto;
+    }
+    
+    .carousel-item img {
       width: 100%;
-      height: 100%;
-      transition: transform 0.5s;
-    }
-
-    .slide img {
-      width: 200px;
-      height: 200px;
+      height: 200px; /* Adjust the height as needed */
       object-fit: cover;
-      margin-bottom: 10px;
-    }
-
-    .slide h3 {
-      font-size: 18px;
-      color: #333;
-    }
-
-    .slide.active {
-      transform: translateX(0);
-    }
-
-    .slide.next {
-      transform: translateX(100%);
-    }
-
-    .slide.previous {
-      transform: translateX(-100%);
     }
   </style>
 </head>
 <body>
-  <div class="carousel">
-    <!-- Add carousel content here -->
-    <div class="slide">
-      <img src="./Images//google.png" alt="Filter 1" />
-      <h3>Filter 1</h3>
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="slide">
-      <img src="./Images/marwiz_pic.jpg" alt="Filter 2" />
-      <h3>Filter 2</h3>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="./Images/google.png" class="d-block" alt="Filter 1">
+      </div>
+      <div class="carousel-item">
+        <img src="./Images/marwiz_pic.jpg" class="d-block" alt="Filter 2">
+      </div>
+      <div class="carousel-item">
+        <img src="./Images/Signage.jpg" class="d-block" alt="Filter 3">
+      </div>
     </div>
-    <div class="slide">
-      <img src="./Images/Signage.jpg" alt="Filter 3" />
-      <h3>Filter 3</h3>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 
-<script>
-  // Add JavaScript code for the carousel
-  const carousel = document.querySelector('.carousel');
-  const slides = Array.from(carousel.getElementsByClassName('slide'));
-  let currentSlideIndex = 0;
-  let touchStartX = 0;
-
-  function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove('active'));
-    slides[index].classList.add('active');
-  }
-
-  function handleTouchStart(event) {
-    touchStartX = event.touches[0].clientX;
-  }
-
-  function handleTouchMove(event) {
-    const touchEndX = event.touches[0].clientX;
-    const touchDiff = touchEndX - touchStartX;
-
-    if (touchDiff > 0) {
-      // Swiped right
-      currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-    } else if (touchDiff < 0) {
-      // Swiped left
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-    }
-
-    showSlide(currentSlideIndex);
-  }
-
-  carousel.addEventListener('touchstart', handleTouchStart);
-  carousel.addEventListener('touchmove', handleTouchMove);
-
-  // Show the initial slide
-  showSlide(currentSlideIndex);
-</script>
+  <!-- Add Bootstrap JS script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
