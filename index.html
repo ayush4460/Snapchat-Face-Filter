@@ -13,12 +13,12 @@
       height: 100vh;
       margin: 0;
     }
-    
+
     .carousel {
       max-width: 550px; /* Adjust the width as needed */
       margin: 0 auto;
     }
-    
+
     .carousel-item img {
       width: 100%;
       height: 550px; /* Adjust the height as needed */
@@ -59,31 +59,45 @@
   <script>
     let clickCount = 0;
 
-    function countButtonClick(direction) {
-  if (direction === 'next' || direction === 'previous') {
-    // Send POST request to update count
-    fetch('http://localhost:8080/api/count', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ direction: direction })
-    })
-    .then(response => {
-      if (response.ok) {
-        clickCount++;
-        console.log(`Button clicked: ${direction}`);
-        console.log(`Total clicks: ${clickCount}`);
-      } else {
-        console.error('Failed to update click count:', response.status);
-      }
-    })
-    .catch(error => {
-      console.error('Error updating click count:', error);
-    });
-  }
-}
+    // Fetch the current count from the backend server
+    fetch('http://192.168.29.138:8080/api/count')
+      .then(response => response.json())
+      .then(data => {
+        clickCount = data.count;
+        console.log('Initial count:', clickCount);
+      })
+      .catch(error => {
+        console.error('Error retrieving click count:', error);
+      });
 
+    function countButtonClick(direction) {
+      if (direction === 'next' || direction === 'previous') {
+        // Send POST request to update count
+        fetch('http://192.168.29.138:8080/api/count', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ direction })
+        })
+          .then(response => {
+            if (response.ok) {
+              clickCount++;
+              console.log(`Button clicked: ${direction}`);
+              console.log('Updated count:', clickCount);
+            } else {
+              console.error('Error updating click count:', response.status);
+            }
+          })
+          .catch(error => {
+            console.error('Error updating click count:', error);
+          });
+      }
+    }
+
+    function redirectToRedirectedPage() {
+      window.location.href = 'https://www.example.com'; // Replace with your desired URL
+    }
   </script>
 </body>
 </html>
