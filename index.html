@@ -5,7 +5,7 @@
   <!-- Add Bootstrap CSS link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-       body {
+    body {
       background-color: black;
       display: flex;
       justify-content: center;
@@ -33,28 +33,40 @@
   </style>
 </head>
 <body>
-    <div id="carouselExampleFade" class="carousel slide carousel-fade">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="./Images/google.png" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="./Images/marwiz_pic.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="./Images/Signage.jpg" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+  <div id="carouselExampleFade" class="carousel slide carousel-fade">
+    <div class="carousel-inner">
+      <div class="carousel-item active" onclick="redirectToRedirectedPage()">
+        <img src="./Images/google.png" class="d-block w-100" alt="...">
       </div>
+      <div class="carousel-item" onclick="redirectToRedirectedPage()">
+        <img src="./Images/marwiz_pic.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item" onclick="redirectToRedirectedPage()">
+        <img src="./Images/Signage.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
   <!-- Add Bootstrap JS script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function redirectToRedirectedPage() {
+      var userAgent = navigator.userAgent.toLowerCase();
+      var isMobile = /mobile|android/.test(userAgent);
+      
+      if (isMobile) {
+        window.location.href = 'https://ayush4460.github.io/redirected';
+      } else {
+        window.location.href = 'http://localhost:3000/redirected';
+      }
+    }
+  </script>
 </body>
 </html>
