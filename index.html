@@ -45,11 +45,11 @@
         <img src="./Images/Signage.jpg" class="d-block w-100" alt="...">
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev" onclick="countButtonClick('previous')">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next" onclick="countButtonClick('next')">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -57,15 +57,23 @@
   <!-- Add Bootstrap JS script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
-    function redirectToRedirectedPage() {
-      var userAgent = navigator.userAgent.toLowerCase();
-      var isMobile = /mobile|android/.test(userAgent);
-      
-      if (isMobile) {
-        window.location.href = 'https://ayush4460.github.io/redirected';
-      } else {
-        window.location.href = 'http://localhost:3000/redirected';
+    let clickCount = 0;
+
+    function countButtonClick(direction) {
+      if (direction === 'next' || direction === 'previous') {
+        clickCount++;
+        console.log(`Button clicked: ${direction}`);
+        console.log(`Total clicks: ${clickCount}`);
       }
+      
+    //   var userAgent = navigator.userAgent.toLowerCase();
+    //   var isMobile = /mobile|android/.test(userAgent);
+      
+    //   if (isMobile) {
+    //     window.location.href = 'https://ayush4460.github.io/redirected';
+    //   } else {
+    //     window.location.href = 'http://localhost:3000/redirected';
+    //   }
     }
   </script>
 </body>
