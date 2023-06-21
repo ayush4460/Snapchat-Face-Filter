@@ -60,21 +60,30 @@
     let clickCount = 0;
 
     function countButtonClick(direction) {
-      if (direction === 'next' || direction === 'previous') {
+  if (direction === 'next' || direction === 'previous') {
+    // Send POST request to update count
+    fetch('http://localhost:8080/api/count', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ direction: direction })
+    })
+    .then(response => {
+      if (response.ok) {
         clickCount++;
         console.log(`Button clicked: ${direction}`);
         console.log(`Total clicks: ${clickCount}`);
+      } else {
+        console.error('Failed to update click count:', response.status);
       }
-      
-    //   var userAgent = navigator.userAgent.toLowerCase();
-    //   var isMobile = /mobile|android/.test(userAgent);
-      
-    //   if (isMobile) {
-    //     window.location.href = 'https://ayush4460.github.io/redirected';
-    //   } else {
-    //     window.location.href = 'http://localhost:3000/redirected';
-    //   }
-    }
+    })
+    .catch(error => {
+      console.error('Error updating click count:', error);
+    });
+  }
+}
+
   </script>
 </body>
 </html>
