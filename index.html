@@ -5,7 +5,7 @@
   <!-- Add Bootstrap CSS link -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
-        body {
+       body {
       background-color: black;
       display: flex;
       justify-content: center;
@@ -14,7 +14,7 @@
       margin: 0;
     }
     
-        .carousel {
+    .carousel {
       max-width: 300px; /* Adjust the width as needed */
       margin: 0 auto;
     }
@@ -24,13 +24,10 @@
       height: 300px; /* Adjust the height as needed */
       object-fit: cover;
     }
-    @media (max-width: 1000px) { /* Adjust the breakpoint as needed */
-      .carousel {
-        max-width: 400px; /* Adjust the width for mobile devices */
-      }
-      
+
+    @media (max-width: 576px) { /* Adjust the breakpoint as needed */
       .carousel-item img {
-        height: 400px; /* Adjust the height for mobile devices */
+        height: 50vh; /* Adjust the height for mobile devices */
       }
     }
   </style>
