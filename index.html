@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Image Swipe</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <style>
     /* CSS for the image container and images */
     body {
@@ -17,72 +19,75 @@
       justify-content: center;
       align-items: center;
     }
-    
+
     #image-container {
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1px solid red;
-      width: 1000px; /* Adjust the container width as needed */
+      width: 1000px;
+      /* Adjust the container width as needed */
       height: 500px;
       /* overflow: hidden; */
     }
 
     .image {
-  opacity: 0.3;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-  transition: opacity 0.5s ease;
-  width: 180px;
-  height: auto;
-  border-radius: 50%;
-  overflow: initial;
-  z-index: 0;
-  margin-right: 10px;
-}
+      opacity: 0.3;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      transition: opacity 0.5s ease;
+      width: 180px;
+      height: auto;
+      border-radius: 50%;
+      overflow: initial;
+      z-index: 0;
+      margin-right: 10px;
+    }
 
-.image.center {
-  opacity: 1;
-  border-radius: 50%;
-  width: 250px;
-  z-index: 1;
-}
+    .image.center {
+      opacity: 1;
+      border-radius: 50%;
+      width: 250px;
+      z-index: 1;
+    }
 
-.image.img1 button.active {
-  background-color: #282828;
-}
+    .image.img1 button.active {
+      background-color: #282828;
+    }
 
-.image.img2 button.active {
-  background-color: #c7bebe;
-}
+    .image.img2 button.active {
+      background-color: #c7bebe;
+    }
 
-.image.img3 button.active {
-  background-color: #fee9f8b4;
-}
+    .image.img3 button.active {
+      background-color: #fee9f8b4;
+    }
 
 
-    
+
     .image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-    
+
     .image button {
       width: 300px;
       height: 300px;
       border: none;
-      border-radius: 50%; /* Make the buttons round */
-      overflow: hidden; /* Hide any overflowing content within the rounded shape */
+      border-radius: 50%;
+      /* Make the buttons round */
+      overflow: hidden;
+      /* Hide any overflowing content within the rounded shape */
       padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       color: rgb(243, 243, 219);
     }
-    
+
     .image button.active {
       border: 5px solid rgb(0, 0, 0);
     }
@@ -92,6 +97,7 @@
       height: 200px;
       object-fit: contain;
     }
+
     .timer-container {
       text-align: center;
       margin-bottom: 100px;
@@ -110,9 +116,11 @@
       0% {
         transform: scale(1);
       }
+
       50% {
         transform: scale(1.1);
       }
+
       100% {
         transform: scale(1);
       }
@@ -125,7 +133,8 @@
       font-weight: bold;
       padding: 20px 40px;
       border-radius: 10px;
-      background-color: #002244; /* Dark navy blue */
+      background-color: #002244;
+      /* Dark navy blue */
       color: white;
       box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
@@ -137,12 +146,14 @@
       font-family: 'Arial', sans-serif;
       font-size: 40px;
       font-weight: bold;
-      color: #002244; /* Dark navy blue */
+      color: #002244;
+      /* Dark navy blue */
       text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
       visibility: hidden;
       animation: fadeinout 20s forwards;
       animation-delay: 1s;
-      margin-top: 20px; /* Adjust the margin-top as needed */
+      margin-top: 20px;
+      /* Adjust the margin-top as needed */
     }
 
     @keyframes fadeinout {
@@ -150,33 +161,31 @@
         opacity: 0;
         visibility: hidden;
       }
+
       10% {
         opacity: 1;
         visibility: visible;
       }
+
       90% {
         opacity: 1;
         visibility: visible;
       }
-      
+
       100% {
         opacity: 0;
         visibility: hidden;
       }
     }
-
-
-
-
-
   </style>
 </head>
+
 <body>
   <div class="timer-container" style="margin-bottom: 300px;">
     <h1 id="timer">2:00</h1>
     <div id="end-msg"></div>
   </div>
-  
+
 
   <div id="image-container">
     <div class="image img1">
@@ -195,8 +204,8 @@
       </button>
     </div>
   </div>
-  
-  
+
+
 
 
   <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
@@ -206,7 +215,9 @@
   </div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
 </body>
 <script>
   // JavaScript for image swiping
@@ -227,7 +238,7 @@
   }
 
   // Click event listener to make an image active when clicked
-  container.addEventListener('click', function(event) {
+  container.addEventListener('click', function (event) {
     const clickedImage = event.target.closest('.image');
     if (clickedImage) {
       const index = Array.from(images).indexOf(clickedImage);
@@ -287,63 +298,64 @@
     images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
   }
   var seconds = 120;
-    var countdown = setInterval(function() {
-      var timerElement = document.getElementById('timer');
-      timerElement.innerText = formatTime(seconds);
+  var countdown = setInterval(function () {
+    var timerElement = document.getElementById('timer');
+    timerElement.innerText = formatTime(seconds);
 
-      if (seconds <= 30) {
-        timerElement.style.color = '#fe0000';
-        timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
-      }
-
-      if (seconds <= 0) {
-        clearInterval(countdown);
-        timerElement.innerText = 'Time up! 😔';
-        timerElement.style.color = 'black';
-        timerElement.style.textShadow = 'none';
-        var endMsgElement = document.getElementById('end-msg');
-        endMsgElement.innerHTML = 'Please try again!';
-        endMsgElement.style.fontFamily = 'Arial, sans-serif';
-        endMsgElement.style.fontSize = '60px';
-        endMsgElement.style.fontWeight = 'bold';
-        endMsgElement.style.color = '#333333';
-        endMsgElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
-      }
-
-      seconds--;
-    }, 1000);
-
-    function formatTime(seconds) {
-      var minutes = Math.floor(seconds / 60);
-      var remainingSeconds = seconds % 60;
-      return minutes.toString().padStart(2, '0') + ':' + remainingSeconds.toString().padStart(2, '0');
+    if (seconds <= 30) {
+      timerElement.style.color = '#fe0000';
+      timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
     }
 
-    function captureImage() {
-      var captureButton = document.querySelector('.capture-button');
-      captureButton.disabled = true;
-
-      var captureMsg = document.getElementById('capture-msg');
-      var experienceMsg = document.getElementById('experience-msg');
-
-      captureMsg.innerHTML = 'Image captured successfully! ';
-      captureMsg.style.visibility = 'visible';
-      captureMsg.style.animation = 'fadeinout 20s forwards';
-
-      experienceMsg.innerHTML = 'Hope you had a great experience! 😀';
-      experienceMsg.style.visibility = 'visible';
-      experienceMsg.style.animation = 'fadeinout 20s forwards';
-
-      setTimeout(function() {
-        captureMsg.style.visibility = 'hidden';
-        captureMsg.style.animation = '';
-        experienceMsg.style.visibility = 'hidden';
-        experienceMsg.style.animation = '';
-        captureButton.disabled = false;
-      }, 8000);
+    if (seconds <= 0) {
+      clearInterval(countdown);
+      timerElement.innerText = 'Time up! 😔';
+      timerElement.style.color = 'black';
+      timerElement.style.textShadow = 'none';
+      var endMsgElement = document.getElementById('end-msg');
+      endMsgElement.innerHTML = 'Please try again!';
+      endMsgElement.style.fontFamily = 'Arial, sans-serif';
+      endMsgElement.style.fontSize = '60px';
+      endMsgElement.style.fontWeight = 'bold';
+      endMsgElement.style.color = '#333333';
+      endMsgElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
     }
+
+    seconds--;
+  }, 1000);
+
+  function formatTime(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+    return minutes.toString().padStart(2, '0') + ':' + remainingSeconds.toString().padStart(2, '0');
+  }
+
+  function captureImage() {
+    var captureButton = document.querySelector('.capture-button');
+    captureButton.disabled = true;
+
+    var captureMsg = document.getElementById('capture-msg');
+    var experienceMsg = document.getElementById('experience-msg');
+
+    captureMsg.innerHTML = 'Image captured successfully! ';
+    captureMsg.style.visibility = 'visible';
+    captureMsg.style.animation = 'fadeinout 20s forwards';
+
+    experienceMsg.innerHTML = 'Hope you had a great experience! 😀';
+    experienceMsg.style.visibility = 'visible';
+    experienceMsg.style.animation = 'fadeinout 20s forwards';
+
+    setTimeout(function () {
+      captureMsg.style.visibility = 'hidden';
+      captureMsg.style.animation = '';
+      experienceMsg.style.visibility = 'hidden';
+      experienceMsg.style.animation = '';
+      captureButton.disabled = false;
+    }, 8000);
+  }
 
 
 
 </script>
+
 </html>
