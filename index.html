@@ -24,16 +24,17 @@
     .image {
       opacity: 0.5;
       transition: opacity 0.5s ease;
-      width: 100px; /* Adjust the width as desired */
+      width: 150px; /* Adjust the width as desired */
       height: auto; /* Maintain aspect ratio */
       border-radius: 50%; /* Make the images rounded */
       overflow: initial; /* Hide any overflowing content within the rounded shape */
       z-index: 0; /* Set the initial z-index */
+      margin-right: 10px; /* Adjust the margin between the images */
     }
 
     .image.center {
       opacity: 1;
-      width: 200px; /* Adjust the width as desired */
+      width: 250px; /* Adjust the width as desired */
       z-index: 1; /* Set the z-index for the center image */
     }
 
@@ -53,11 +54,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: transparent;
+      background-color: rgb(243, 243, 219);
     }
 
     .image img {
-      width: 60%;
+      width: 80%;
       height: 90%;
       object-fit: contain;
     }
@@ -67,96 +68,96 @@
   <div id="image-container">
     <div class="image">
       <button>
-      <img src="Images/1.png" alt="Image 1">
-    </button>
+        <img src="Images/1.png" alt="Image 1">
+      </button>
     </div>
     <div class="image center">
       <button>
-      <img src="Images/2.png" alt="Image 2">
-    </button>
+        <img src="Images/2.png" alt="Image 2">
+      </button>
     </div>
     <div class="image">
       <button>
-      <img src="Images/3.png" alt="Image 3">
-    </button>
+        <img src="Images/3.png" alt="Image 3">
+      </button>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
-  <script>
-    // JavaScript for image swiping
-    const container = document.getElementById('image-container');
-    const images = container.getElementsByClassName('image');
-    const numImages = images.length;
-    let centerIndex = 1; // Set the initial center image index to 1
+<script>
+  // JavaScript for image swiping
+  const container = document.getElementById('image-container');
+  const images = container.getElementsByClassName('image');
+  const numImages = images.length;
+  let centerIndex = 1; // Set the initial center image index to 1
 
-    function makeImageActive(index) {
-      for (let i = 0; i < images.length; i++) {
-        images[i].classList.remove('center');
-        images[i].style.zIndex = 0; // Reset the z-index of all images
-      }
-      images[index].classList.add('center');
-      images[index].style.zIndex = 1; // Set the z-index of the center image
+  function makeImageActive(index) {
+    for (let i = 0; i < images.length; i++) {
+      images[i].classList.remove('center');
+      images[i].style.zIndex = 0; // Reset the z-index of all images
+    }
+    images[index].classList.add('center');
+    images[index].style.zIndex = 1; // Set the z-index of the center image
+  }
+
+  // Click event listener to make an image active when clicked
+  container.addEventListener('click', function(event) {
+    const clickedImage = event.target.closest('.image');
+    if (clickedImage) {
+      const index = Array.from(images).indexOf(clickedImage);
+      makeImageActive(index);
+    }
+  });
+
+  // Swipe functionality
+  container.addEventListener('touchstart', handleTouchStart, false);
+  container.addEventListener('touchmove', handleTouchMove, false);
+
+  let xDown = null;
+  let yDown = null;
+
+  function handleTouchStart(event) {
+    const firstTouch = event.touches[0];
+    xDown = firstTouch.clientX;
+    yDown = firstTouch.clientY;
+  }
+
+  function handleTouchMove(event) {
+    if (!xDown || !yDown) {
+      return;
     }
 
-    // Click event listener to make an image active when clicked
-    container.addEventListener('click', function(event) {
-      const clickedImage = event.target.closest('.image');
-      if (clickedImage) {
-        const index = Array.from(images).indexOf(clickedImage);
-        makeImageActive(index);
-      }
-    });
+    const xUp = event.touches[0].clientX;
+    const yUp = event.touches[0].clientY;
 
-    // Swipe functionality
-    container.addEventListener('touchstart', handleTouchStart, false);
-    container.addEventListener('touchmove', handleTouchMove, false);
+    const xDiff = xDown - xUp;
+    const yDiff = yDown - yUp;
 
-    let xDown = null;
-    let yDown = null;
-
-    function handleTouchStart(event) {
-      const firstTouch = event.touches[0];
-      xDown = firstTouch.clientX;
-      yDown = firstTouch.clientY;
-    }
-
-    function handleTouchMove(event) {
-      if (!xDown || !yDown) {
-        return;
-      }
-
-      const xUp = event.touches[0].clientX;
-      const yUp = event.touches[0].clientY;
-
-      const xDiff = xDown - xUp;
-      const yDiff = yDown - yUp;
-
-      if (Math.abs(xDiff) > Math.abs(yDiff)) {
-        if (xDiff > 0) {
-          swipeImage('left');
-        } else {
-          swipeImage('right');
-        }
-      }
-
-      xDown = null;
-      yDown = null;
-    }
-
-    function swipeImage(direction) {
-      images[centerIndex].classList.remove('center');
-      images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
-
-      if (direction === 'left') {
-        centerIndex = (centerIndex + 1) % numImages;
+    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+      if (xDiff > 0) {
+        swipeImage('left');
       } else {
-        centerIndex = (centerIndex - 1 + numImages) % numImages;
+        swipeImage('right');
       }
-
-      images[centerIndex].classList.add('center');
-      images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
     }
-  </script>
+
+    xDown = null;
+    yDown = null;
+  }
+
+  function swipeImage(direction) {
+    images[centerIndex].classList.remove('center');
+    images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
+
+    if (direction === 'left') {
+      centerIndex = (centerIndex + 1) % numImages;
+    } else {
+      centerIndex = (centerIndex - 1 + numImages) % numImages;
+    }
+
+    images[centerIndex].classList.add('center');
+    images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
+  }
+</script>
 </html>
