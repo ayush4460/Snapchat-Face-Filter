@@ -141,11 +141,15 @@
         opacity: 1;
         visibility: visible;
       }
+      
       100% {
         opacity: 0;
         visibility: hidden;
       }
     }
+
+
+
 
 
   </style>
@@ -155,7 +159,7 @@
     <h1 id="timer">2:00</h1>
     <div id="end-msg"></div>
   </div>
-
+  
 
   <div id="image-container">
     <div class="image">
@@ -288,7 +292,7 @@
       }
 
       seconds--;
-    }, 100);
+    }, 1000);
 
     function formatTime(seconds) {
       var minutes = Math.floor(seconds / 60);
