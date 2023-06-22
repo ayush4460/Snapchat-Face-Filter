@@ -269,7 +269,7 @@
       timerElement.innerText = formatTime(seconds);
 
       if (seconds <= 30) {
-        timerElement.style.color = '#5a0d0d';
+        timerElement.style.color = '#fe0000';
         timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
       }
 
@@ -288,7 +288,7 @@
       }
 
       seconds--;
-    }, 1000);
+    }, 100);
 
     function formatTime(seconds) {
       var minutes = Math.floor(seconds / 60);
