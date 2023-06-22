@@ -27,12 +27,12 @@
     }
 
     .image {
-      opacity: 0.2;
+      opacity: 0.3;
       width: 100%;
       height: 100%  ;
       transition: opacity 0.5s ease;
 
-      width: 150px; /* Adjust the width as desired */
+      width: 180px; /* Adjust the width as desired */
       height: auto; /* Maintain aspect ratio */
       border-radius: 50%; /* Make the images rounded */
       overflow: initial; /* Hide any overflowing content within the rounded shape */
@@ -100,21 +100,20 @@
       }
     }
 
+
     .capture-button {
       font-family: 'Arial', sans-serif;
-      font-size: 50px;
+      font-size: 60px;
       font-weight: bold;
-      padding-top: 50%;
-      padding: 30px 60px;
-      border-radius: 100%;
+      padding: 20px 40px;
+      border-radius: 10px;
       background-color: #002244; /* Dark navy blue */
       color: white;
-      text-shadow: 80px 80px 160px rgba(0, 0, 0, 0.5);
-      box-shadow: 80px 80px 160px rgba(0, 0, 0, 0.3);
-      animation: pulse 1s infinite;
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
       cursor: pointer;
-      margin-top: 70px;
+      margin-top: 50px;
     }
+
 
     #capture-msg,
     #experience-msg {
@@ -270,7 +269,7 @@
       timerElement.innerText = formatTime(seconds);
 
       if (seconds <= 30) {
-        timerElement.style.color = 'red';
+        timerElement.style.color = '#5a0d0d';
         timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
       }
 
@@ -279,7 +278,6 @@
         timerElement.innerText = 'Time up! 😔';
         timerElement.style.color = 'black';
         timerElement.style.textShadow = 'none';
-        timerElement.style.animation = '';
         var endMsgElement = document.getElementById('end-msg');
         endMsgElement.innerHTML = 'Please try again!';
         endMsgElement.style.fontFamily = 'Arial, sans-serif';
@@ -290,7 +288,7 @@
       }
 
       seconds--;
-    }, 2000);
+    }, 1000);
 
     function formatTime(seconds) {
       var minutes = Math.floor(seconds / 60);
@@ -305,13 +303,13 @@
       var captureMsg = document.getElementById('capture-msg');
       var experienceMsg = document.getElementById('experience-msg');
 
-      captureMsg.innerHTML = 'Image captured successfully! 😀';
+      captureMsg.innerHTML = 'Image captured successfully! ';
       captureMsg.style.visibility = 'visible';
-      captureMsg.style.animation = 'fadeinout 5s forwards';
+      captureMsg.style.animation = 'fadeinout 20s forwards';
 
       experienceMsg.innerHTML = 'Hope you had a great experience! 😀';
       experienceMsg.style.visibility = 'visible';
-      experienceMsg.style.animation = 'fadeinout 5s forwards';
+      experienceMsg.style.animation = 'fadeinout 20s forwards';
 
       setTimeout(function() {
         captureMsg.style.visibility = 'hidden';
@@ -319,8 +317,9 @@
         experienceMsg.style.visibility = 'hidden';
         experienceMsg.style.animation = '';
         captureButton.disabled = false;
-      }, 80000);
+      }, 8000);
     }
+
 
 
 </script>
