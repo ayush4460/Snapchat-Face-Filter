@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       flex-direction: column;
-      justify-content: space-between;
+      /* justify-content: space-between; */
       background-color: #f1f1f1;
 
       height: 100vh;
@@ -22,30 +22,47 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%; /* Adjust the container width as needed */
-      overflow: hidden;
+      border: 1px solid red;
+      width: 1000px; /* Adjust the container width as needed */
+      height: 500px;
+      /* overflow: hidden; */
     }
 
     .image {
-      opacity: 0.3;
-      width: 100%;
-      height: 100%  ;
-      transition: opacity 0.5s ease;
+  opacity: 0.3;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  transition: opacity 0.5s ease;
+  width: 180px;
+  height: auto;
+  border-radius: 50%;
+  overflow: initial;
+  z-index: 0;
+  margin-right: 10px;
+}
 
-      width: 180px; /* Adjust the width as desired */
-      height: auto; /* Maintain aspect ratio */
-      border-radius: 50%; /* Make the images rounded */
-      overflow: initial; /* Hide any overflowing content within the rounded shape */
-      z-index: 0; /* Set the initial z-index */
-      margin-right: 40px; /* Adjust the margin between the images */
-      margin-left: 30px; /* Adjust the margin between the images */
-    }
+.image.center {
+  opacity: 1;
+  border-radius: 50%;
+  width: 250px;
+  z-index: 1;
+}
 
-    .image.center {
-      opacity: 1;
-      width: 150px; /* Adjust the width as desired */
-      z-index: 1; /* Set the z-index for the center image */
-    }
+.image.img1 button.active {
+  background-color: #282828;
+}
+
+.image.img2 button.active {
+  background-color: #c7bebe;
+}
+
+.image.img3 button.active {
+  background-color: #fee9f8b4;
+}
+
+
     
     .image img {
       width: 100%;
@@ -67,9 +84,9 @@
     }
     
     .image button.active {
-      border: 2px solid black;
+      border: 5px solid rgb(0, 0, 0);
     }
-    
+
     .image img {
       width: 150px;
       height: 200px;
@@ -114,7 +131,6 @@
       cursor: pointer;
       margin-top: 50px;
     }
-
 
     #capture-msg,
     #experience-msg {
@@ -163,22 +179,24 @@
   
 
   <div id="image-container">
-    <div class="image">
+    <div class="image img1">
       <button>
         <img src="Images/1.png" alt="Image 1">
       </button>
     </div>
-    <div class="image center">
+    <div class="image center img2">
       <button class="active">
         <img src="Images/2.png" alt="Image 2">
       </button>
     </div>
-    <div class="image">
+    <div class="image img3">
       <button>
         <img src="Images/3.png" alt="Image 3">
       </button>
     </div>
   </div>
+  
+  
 
 
   <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
