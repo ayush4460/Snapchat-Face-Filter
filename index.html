@@ -1,102 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Filter Carousel</title>
-  <!-- Add Bootstrap CSS link -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <title>Image Swipe</title>
   <style>
+    /* CSS for the image container and images */
     body {
-      background-color: black;
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+    }
+    
+    #image-container {
+      display: flex;
+      align-items: center;
+      width: 100%; /* Adjust the container width as needed */
+      overflow: hidden;
     }
 
-    .carousel {
-      max-width: 550px; /* Adjust the width as needed */
-      margin: 0 auto;
+    .image {
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
+      width: calc(50% / 3); /* Set the width to 33.33% */
+      height: auto; /* Maintain aspect ratio */
     }
 
-    .carousel-item img {
-      width: 100%;
-      height: 550px; /* Adjust the height as needed */
-      object-fit: cover;
-    }
-
-    @media (max-width: 576px) { /* Adjust the breakpoint as needed */
-      .carousel-item img {
-        height: 50vh; /* Adjust the height for mobile devices */
-      }
+    .image.center {
+      opacity: 1;
+      width: 50%; /* Set the width to 50% for the center image */
     }
   </style>
 </head>
 <body>
-  <div id="carouselExampleFade" class="carousel slide carousel-fade">
-    <div class="carousel-inner">
-      <div class="carousel-item active" onclick="redirectToRedirectedPage()">
-        <img src="./Images/google.png" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" onclick="redirectToRedirectedPage()">
-        <img src="./Images/marwiz_pic.jpg" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item" onclick="redirectToRedirectedPage()">
-        <img src="./Images/Signage.jpg" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev" onclick="countButtonClick('previous')">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next" onclick="countButtonClick('next')">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+  <div id="image-container">
+    <img class="image" src="Images/1.png" alt="Image 1">
+    <img class="image center" src="Images/2.png" alt="Image 2">
+    <img class="image" src="Images/3.png" alt="Image 3">
   </div>
-  <!-- Add Bootstrap JS script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
   <script>
-    let clickCount = 0;
+    // JavaScript for image swiping
+    const container = document.getElementById('image-container');
+    const images = container.getElementsByClassName('image');
+    const numImages = images.length;
+    let centerIndex = 1; // Set the initial center image index to 1
 
-    // Fetch the current count from the backend server
-    fetch('http://192.168.29.138:8080/api/count')
-      .then(response => response.json())
-      .then(data => {
-        clickCount = data.count;
-        console.log('Initial count:', clickCount);
-      })
-      .catch(error => {
-        console.error('Error retrieving click count:', error);
-      });
-
-    function countButtonClick(direction) {
-      if (direction === 'next' || direction === 'previous') {
-        // Send POST request to update count
-        fetch('http://192.168.29.138:8080/api/count', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ direction })
-        })
-          .then(response => {
-            if (response.ok) {
-              clickCount++;
-              console.log(`Button clicked: ${direction}`);
-              console.log('Updated count:', clickCount);
-            } else {
-              console.error('Error updating click count:', response.status);
-            }
-          })
-          .catch(error => {
-            console.error('Error updating click count:', error);
-          });
+    function makeImageActive(index) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].classList.remove('center');
       }
+      images[index].classList.add('center');
     }
 
-    function redirectToRedirectedPage() {
-      window.location.href = 'https://www.example.com'; // Replace with your desired URL
+    // Click event listener to make an image active when clicked
+    container.addEventListener('click', function(event) {
+      const clickedImage = event.target;
+      if (clickedImage.classList.contains('image')) {
+        const index = Array.from(images).indexOf(clickedImage);
+        makeImageActive(index);
+      }
+    });
+
+    // Swipe functionality
+    container.addEventListener('touchstart', handleTouchStart, false);
+    container.addEventListener('touchmove', handleTouchMove, false);
+
+    let xDown = null;
+    let yDown = null;
+
+    function handleTouchStart(event) {
+      const firstTouch = event.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    }
+
+    function handleTouchMove(event) {
+      if (!xDown || !yDown) {
+        return;
+      }
+
+      const xUp = event.touches[0].clientX;
+      const yUp = event.touches[0].clientY;
+
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+          swipeImage('left');
+        } else {
+          swipeImage('right');
+        }
+      }
+
+      xDown = null;
+      yDown = null;
+    }
+
+    function swipeImage(direction) {
+      images[centerIndex].classList.remove('center');
+
+      if (direction === 'left') {
+        centerIndex = (centerIndex + 1) % numImages;
+      } else {
+        centerIndex = (centerIndex - 1 + numImages) % numImages;
+      }
+
+      images[centerIndex].classList.add('center');
     }
   </script>
 </body>
