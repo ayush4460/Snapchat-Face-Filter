@@ -7,6 +7,11 @@
     /* CSS for the image container and images */
     body {
       margin: 0;
+      padding: 0;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #f1f1f1;
+
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -22,8 +27,11 @@
     }
 
     .image {
-      opacity: 0.5;
+      opacity: 0.2;
+      width: 100%;
+      height: 100%  ;
       transition: opacity 0.5s ease;
+
       width: 150px; /* Adjust the width as desired */
       height: auto; /* Maintain aspect ratio */
       border-radius: 50%; /* Make the images rounded */
@@ -37,16 +45,16 @@
       width: 250px; /* Adjust the width as desired */
       z-index: 1; /* Set the z-index for the center image */
     }
-
+    
     .image img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
-
+    
     .image button {
-      width: 100%;
-      height: 100%;
+      width: 300px;
+      height: 300px;
       border: none;
       border-radius: 50%; /* Make the buttons round */
       overflow: hidden; /* Hide any overflowing content within the rounded shape */
@@ -54,17 +62,102 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgb(243, 243, 219);
+      color: rgb(243, 243, 219);
     }
-
+    
+    .image button.active {
+      border: 2px solid black;
+    }
+    
     .image img {
-      width: 80%;
-      height: 90%;
+      width: 150px;
+      height: 200px;
       object-fit: contain;
     }
+    .timer-container {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+
+    #timer {
+      font-family: 'Arial', sans-serif;
+      font-size: 70px;
+      font-weight: bold;
+      color: #333333;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .capture-button {
+      font-family: 'Arial', sans-serif;
+      font-size: 50px;
+      font-weight: bold;
+      padding-top: 50%;
+      padding: 30px 60px;
+      border-radius: 100%;
+      background-color: #002244; /* Dark navy blue */
+      color: white;
+      text-shadow: 80px 80px 160px rgba(0, 0, 0, 0.5);
+      box-shadow: 80px 80px 160px rgba(0, 0, 0, 0.3);
+      animation: pulse 1s infinite;
+      cursor: pointer;
+      margin-top: 70px;
+    }
+
+    #capture-msg,
+    #experience-msg {
+      font-family: 'Arial', sans-serif;
+      font-size: 40px;
+      font-weight: bold;
+      color: #002244; /* Dark navy blue */
+      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      visibility: hidden;
+      animation: fadeinout 20s forwards;
+      animation-delay: 1s;
+      margin-top: 20px; /* Adjust the margin-top as needed */
+    }
+
+    @keyframes fadeinout {
+      0% {
+        opacity: 0;
+        visibility: hidden;
+      }
+      10% {
+        opacity: 1;
+        visibility: visible;
+      }
+      90% {
+        opacity: 1;
+        visibility: visible;
+      }
+      100% {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+
   </style>
 </head>
 <body>
+  <div class="timer-container" style="margin-bottom: 300px;">
+    <h1 id="timer">2:00</h1>
+    <div id="end-msg"></div>
+  </div>
+
+
   <div id="image-container">
     <div class="image">
       <button>
@@ -72,7 +165,7 @@
       </button>
     </div>
     <div class="image center">
-      <button>
+      <button class="active">
         <img src="Images/2.png" alt="Image 2">
       </button>
     </div>
@@ -82,6 +175,14 @@
       </button>
     </div>
   </div>
+
+
+  <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
+    <button class="capture-button" onclick="captureImage()">Capture</button>
+    <div id="capture-msg"></div>
+    <div id="experience-msg"></div>
+  </div>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
@@ -95,9 +196,11 @@
   function makeImageActive(index) {
     for (let i = 0; i < images.length; i++) {
       images[i].classList.remove('center');
+      images[i].querySelector('button').classList.remove('active');
       images[i].style.zIndex = 0; // Reset the z-index of all images
     }
     images[index].classList.add('center');
+    images[index].querySelector('button').classList.add('active');
     images[index].style.zIndex = 1; // Set the z-index of the center image
   }
 
@@ -148,6 +251,7 @@
 
   function swipeImage(direction) {
     images[centerIndex].classList.remove('center');
+    images[centerIndex].querySelector('button').classList.remove('active');
     images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
 
     if (direction === 'left') {
@@ -157,7 +261,67 @@
     }
 
     images[centerIndex].classList.add('center');
+    images[centerIndex].querySelector('button').classList.add('active');
     images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
   }
+  var seconds = 120;
+    var countdown = setInterval(function() {
+      var timerElement = document.getElementById('timer');
+      timerElement.innerText = formatTime(seconds);
+
+      if (seconds <= 30) {
+        timerElement.style.color = 'red';
+        timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
+      }
+
+      if (seconds <= 0) {
+        clearInterval(countdown);
+        timerElement.innerText = 'Time up! 😔';
+        timerElement.style.color = 'black';
+        timerElement.style.textShadow = 'none';
+        timerElement.style.animation = '';
+        var endMsgElement = document.getElementById('end-msg');
+        endMsgElement.innerHTML = 'Please try again!';
+        endMsgElement.style.fontFamily = 'Arial, sans-serif';
+        endMsgElement.style.fontSize = '60px';
+        endMsgElement.style.fontWeight = 'bold';
+        endMsgElement.style.color = '#333333';
+        endMsgElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
+      }
+
+      seconds--;
+    }, 2000);
+
+    function formatTime(seconds) {
+      var minutes = Math.floor(seconds / 60);
+      var remainingSeconds = seconds % 60;
+      return minutes.toString().padStart(2, '0') + ':' + remainingSeconds.toString().padStart(2, '0');
+    }
+
+    function captureImage() {
+      var captureButton = document.querySelector('.capture-button');
+      captureButton.disabled = true;
+
+      var captureMsg = document.getElementById('capture-msg');
+      var experienceMsg = document.getElementById('experience-msg');
+
+      captureMsg.innerHTML = 'Image captured successfully! 😀';
+      captureMsg.style.visibility = 'visible';
+      captureMsg.style.animation = 'fadeinout 5s forwards';
+
+      experienceMsg.innerHTML = 'Hope you had a great experience! 😀';
+      experienceMsg.style.visibility = 'visible';
+      experienceMsg.style.animation = 'fadeinout 5s forwards';
+
+      setTimeout(function() {
+        captureMsg.style.visibility = 'hidden';
+        captureMsg.style.animation = '';
+        experienceMsg.style.visibility = 'hidden';
+        experienceMsg.style.animation = '';
+        captureButton.disabled = false;
+      }, 80000);
+    }
+
+
 </script>
 </html>
