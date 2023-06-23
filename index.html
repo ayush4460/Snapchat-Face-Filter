@@ -156,6 +156,20 @@
       cursor: pointer;
       margin-top: 50px;
     }
+    .download-button {
+      font-family: 'Arial', sans-serif;
+      font-size: 60px;
+      font-weight: bold;
+      padding: 20px 40px;
+      border-radius: 10px;
+      background-color: #002244;
+      /* Dark navy blue */
+      color: white;
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      margin-top: 50px;
+    }
+
 
     #image-container {
   position: relative;
@@ -246,7 +260,7 @@
     <div id="capture-msg"></div>
     <div id="experience-msg"></div>
   </div>
-  
+  <button class="download-button">⬇ Download</button>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -341,6 +355,57 @@ container.addEventListener('click', function (event) {
   callFilterAPI(deviceId, filterId);
 }
 
+var downloadButton = document.querySelector('.download-button');
+
+downloadButton.addEventListener('click', function() {
+  // Call the API to fetch the latest image filename
+  fetch('http://192.168.29.138:3000/api/images/latest', {
+    method: 'GET',
+  })
+  .then(response => {
+    if (response.ok) {
+      console.log('Latest image filename API called successfully');
+      // Return the filename from the API response
+      return response.text();
+    } else {
+      console.error('Failed to call the Latest image filename API');
+      // Display error message or handle the error
+      throw new Error('Latest image filename API failed');
+    }
+  })
+  .then(filename => {
+    // Call the API to download the image with the obtained filename
+    fetch(`http://192.168.29.138:3000/api/images/${filename}`, {
+      method: 'GET',
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Image download API called successfully');
+        // Perform any necessary actions after successful download
+        return response.blob();
+      } else {
+        console.error('Failed to call the Image download API');
+        // Display error message or handle the error
+        throw new Error('Image download API failed');
+      }
+    })
+    .then(blob => {
+      // Create a temporary download link
+      var downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = filename;
+      downloadLink.click();
+    })
+    .catch(error => {
+      console.error('Error calling the Image download API:', error);
+      // Display error message or handle the error
+    });
+  })
+  .catch(error => {
+    console.error('Error calling the Latest image filename API:', error);
+    // Display error message or handle the error
+  });
+});
   
   function callFilterAPI(deviceId, filterId) {
   // Make a request to the backend API
@@ -454,10 +519,6 @@ container.addEventListener('click', function (event) {
       }, 5000);
     });
 }
-
-
-
-
 
 </script>
 
