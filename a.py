@@ -25,7 +25,7 @@ def ws_connect():
     while True:
         try:
             # sio.connect('http://ws.marwiztech.com')
-            sio.connect('http://192.168.29.138:3000')
+            sio.connect('http://20.204.100.126:3000')
             break
         except:
             print("Connection failed")
@@ -104,9 +104,12 @@ def apply_snap_filter(face_img, filter_img, x, y, w, h, scale_factor):
     inv_alpha_mask = 1.0 - alpha_mask
     x_offset = int((w - new_w) / 2)
     y_offset = int((h - new_h) / 2)
-    for c in range(0, 3):
-        face_img[y+y_offset:y+y_offset+new_h, x+x_offset:x+x_offset+new_w, c] = (alpha_mask * filter_img[:, :, c] +
+    for c in range(0, 4):
+        try:
+            face_img[y+y_offset:y+y_offset+new_h, x+x_offset:x+x_offset+new_w, c] = (alpha_mask * filter_img[:, :, c] +
                                                                                   inv_alpha_mask * face_img[y+y_offset:y+y_offset+new_h, x+x_offset:x+x_offset+new_w, c])
+        except:
+            a = 0
     return face_img
 
 def apply_snap_filter_to_image(image, scale_factor):
@@ -116,8 +119,10 @@ def apply_snap_filter_to_image(image, scale_factor):
 
     for (x, y, w, h) in faces:
         snap_filter = cv2.imread(os.path.join('filter/', filter_id+".png"), -1)
-        
-        image = apply_snap_filter(image, snap_filter, x, y, w, h, scale_factor)
+        try:
+            image = apply_snap_filter(image, snap_filter, x, y, w, h, scale_factor) #123
+        except:
+            a=0
 
     return image
 
@@ -126,7 +131,10 @@ scale_factor = 1.1
 time.sleep(2)
 while True:
     frame = frame_2.copy()
-    frame = apply_snap_filter_to_image(frame, scale_factor)
+    try:
+        frame = apply_snap_filter_to_image(frame, scale_factor)  #123
+    except:
+        a=0
 
     frame_3 = frame.copy()
     cv2.imshow('frame', frame)
