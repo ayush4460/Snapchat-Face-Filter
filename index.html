@@ -223,63 +223,66 @@
 
 
   <div id="image-container">
-    <div class="image img2">
+    <div class="image img2" data-filter-id="2">
       <button>
         <img src="Images/2.png" alt="Image 2">
       </button>
     </div>
-    <div class="image center img1">
+    <div class="image center img1" data-filter-id="4">
       <button class="active">
         <img src="Images/1.png" alt="Image 1">
       </button>
     </div>
-    <div class="image img3">
+    <div class="image img3" data-filter-id="3">
       <button>
         <img src="Images/3.png" alt="Image 3">
       </button>
     </div>
   </div>
-
-
-
+  
 
   <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
     <button class="capture-button" onclick="captureImage()">Capture</button>
     <div id="capture-msg"></div>
     <div id="experience-msg"></div>
   </div>
-
+  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
     crossorigin="anonymous"></script>
 </body>
 <script>
-  // JavaScript for image swiping
-  const container = document.getElementById('image-container');
-  const images = container.getElementsByClassName('image');
-  const numImages = images.length;
-  let centerIndex = 1; // Set the initial center image index to 1
+ // JavaScript for image swiping
+const container = document.getElementById('image-container');
+const images = container.getElementsByClassName('image');
+const numImages = images.length;
+let centerIndex = 1; // Set the initial center image index to 1
 
-  function makeImageActive(index) {
-    for (let i = 0; i < images.length; i++) {
-      images[i].classList.remove('center');
-      images[i].querySelector('button').classList.remove('active');
-      images[i].style.zIndex = 0; // Reset the z-index of all images
-    }
-    images[index].classList.add('center');
-    images[index].querySelector('button').classList.add('active');
-    images[index].style.zIndex = 1; // Set the z-index of the center image
+function makeImageActive(index) {
+  for (let i = 0; i < images.length; i++) {
+    images[i].classList.remove('center');
+    images[i].querySelector('button').classList.remove('active');
+    images[i].style.zIndex = 0; // Reset the z-index of all images
   }
+  images[index].classList.add('center');
+  images[index].querySelector('button').classList.add('active');
+  images[index].style.zIndex = 1; // Set the z-index of the center image
 
-  // Click event listener to make an image active when clicked
-  container.addEventListener('click', function (event) {
-    const clickedImage = event.target.closest('.image');
-    if (clickedImage) {
-      const index = Array.from(images).indexOf(clickedImage);
-      makeImageActive(index);
-    }
-  });
+  // Call the API based on the selected filterId
+  const filterId = images[index].dataset.filterId;
+  const deviceId = '111'; // Replace with the actual device ID
+  callFilterAPI(deviceId, filterId);
+}
+
+// Click event listener to make an image active when clicked
+container.addEventListener('click', function (event) {
+  const clickedImage = event.target.closest('.image');
+  if (clickedImage) {
+    const index = Array.from(images).indexOf(clickedImage);
+    makeImageActive(index);
+  }
+});
 
   // Swipe functionality
   container.addEventListener('touchstart', handleTouchStart, false);
@@ -318,20 +321,46 @@
   }
 
   function swipeImage(direction) {
-    images[centerIndex].classList.remove('center');
-    images[centerIndex].querySelector('button').classList.remove('active');
-    images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
+  images[centerIndex].classList.remove('center');
+  images[centerIndex].querySelector('button').classList.remove('active');
+  images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
 
-    if (direction === 'left') {
-      centerIndex = (centerIndex + 1) % numImages;
-    } else {
-      centerIndex = (centerIndex - 1 + numImages) % numImages;
-    }
-
-    images[centerIndex].classList.add('center');
-    images[centerIndex].querySelector('button').classList.add('active');
-    images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
+  if (direction === 'left') {
+    centerIndex = (centerIndex + 1) % numImages;
+  } else {
+    centerIndex = (centerIndex - 1 + numImages) % numImages;
   }
+
+  images[centerIndex].classList.add('center');
+  images[centerIndex].querySelector('button').classList.add('active');
+  images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
+
+  // Call the API based on the selected filterId
+  const filterId = images[centerIndex].dataset.filterId;
+  const deviceId = '111'; // Replace with the actual device ID
+  callFilterAPI(deviceId, filterId);
+}
+
+  
+  function callFilterAPI(deviceId, filterId) {
+  // Make a request to the backend API
+  fetch(`http://192.168.29.138:3000/api/filter/${deviceId}/${filterId}`)
+    .then(response => {
+      if (response.ok) {
+        console.log(`Filter API called for deviceId: ${deviceId}, filterId: ${filterId}`);
+      } else {
+        console.error('Failed to call the Filter API');
+      }
+    })
+    .catch(error => {
+      console.error('Error calling the Filter API:', error);
+    });
+}
+
+
+
+
+
   var seconds = 120;
   var countdown = setInterval(function () {
     var timerElement = document.getElementById('timer');
@@ -366,28 +395,67 @@
   }
 
   function captureImage() {
-    var captureButton = document.querySelector('.capture-button');
-    captureButton.disabled = true;
+  var captureButton = document.querySelector('.capture-button');
+  captureButton.disabled = true;
 
-    var captureMsg = document.getElementById('capture-msg');
-    var experienceMsg = document.getElementById('experience-msg');
+  var captureMsg = document.getElementById('capture-msg');
+  var experienceMsg = document.getElementById('experience-msg');
 
-    captureMsg.innerHTML = 'Image captured successfully! ';
-    captureMsg.style.visibility = 'visible';
-    captureMsg.style.animation = 'fadeinout 20s forwards';
+  captureMsg.innerHTML = 'Image capture in progress... 🎞 ';
+  captureMsg.style.visibility = 'visible';
 
-    experienceMsg.innerHTML = 'Hope you had a great experience! 😀';
-    experienceMsg.style.visibility = 'visible';
-    experienceMsg.style.animation = 'fadeinout 20s forwards';
+  // Call the API to capture the image
+  const deviceId = '111'; // Replace with the actual device ID
+  fetch(`http://192.168.29.138:3000/api/take_picture/${deviceId}`)
+    .then(response => {
+      if (response.ok) {
+        console.log('Image capture API called successfully');
+        // Wait for 3 seconds before hiding the capture message
+        setTimeout(function () {
+          captureMsg.style.animation = 'fadeout 1s forwards';
+          // Wait for the fadeout animation to complete before hiding the capture message
+          setTimeout(function () {
+            captureMsg.style.visibility = 'hidden';
+          }, 1000);
+          experienceMsg.innerHTML = 'Image captured successfully  ✔ <br>Hope you had a great experience 😃';
+          experienceMsg.style.visibility = 'visible';
+          experienceMsg.style.animation = 'fadeinout 20s forwards';
+        }, 3000);
+      } else {
+        console.error('Failed to call the Image capture API');
+        // Display error message
+        captureMsg.style.animation = 'fadeout 1s forwards';
+        // Wait for the fadeout animation to complete before hiding the capture message
+        setTimeout(function () {
+          captureMsg.style.visibility = 'hidden';
+        }, 1000);
+        experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
+        experienceMsg.style.visibility = 'visible';
+        experienceMsg.style.animation = 'fadeinout 20s forwards';
+      }
+    })
+    .catch(error => {
+      console.error('Error calling the Image capture API:', error);
+      // Display error message
+      captureMsg.style.animation = 'fadeout 1s forwards';
+      // Wait for the fadeout animation to complete before hiding the capture message
+      setTimeout(function () {
+        captureMsg.style.visibility = 'hidden';
+      }, 1000);
+      experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
+      experienceMsg.style.visibility = 'visible';
+      experienceMsg.style.animation = 'fadeinout 20s forwards';
+    })
+    .finally(() => {
+      setTimeout(function () {
+        experienceMsg.style.visibility = 'hidden';
+        experienceMsg.style.animation = '';
+        captureButton.disabled = false;
+      }, 5000);
+    });
+}
 
-    setTimeout(function () {
-      captureMsg.style.visibility = 'hidden';
-      captureMsg.style.animation = '';
-      experienceMsg.style.visibility = 'hidden';
-      experienceMsg.style.animation = '';
-      captureButton.disabled = false;
-    }, 8000);
-  }
+
 
 
 
