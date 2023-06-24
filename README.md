@@ -45,10 +45,10 @@ Before running the application, ensure that you have the following installed:
    - Swiping the filter will also apply it to the camera feed.
 
    - For Swipe functionality, follow these steps:
-   1) Click `Ctrl+Shift+i` in the keyboard to open Console
-   2) Now, Click `Ctrl+Shift+m` in the keyboard to open Toggle Device Toolbar
-   3) On the top, Select `Dimensions -> Click on any device mentioned there`
-   4) Hover on the filters and `Swipe right or left` to apply that filter to the camera feed 
+   1) Click `Ctrl+Shift+i` in the keyboard to open Console.
+   2) Now, Click `Ctrl+Shift+m` in the keyboard to open Toggle Device Toolbar.
+   3) On the top, Select `Dimensions -> Click on any device mentioned there`.
+   4) Hover on the filters and `Swipe right or left` to apply that filter to the camera feed .
 
 5. **Capture an image:**
 
