@@ -6,8 +6,12 @@ Welcome to the frontend repository of the "Snapchat-Face-Filter" project! This r
 
 Before running the application, ensure that you have the following installed:
 
-- Python: [Download and install Python](https://www.python.org/downloads/)
-- Web browser: Any modern web browser like Chrome, Firefox, or Safari
+- Python3: [Download and install Python](https://www.python.org/downloads/)
+- Web browser: Any modern web browser like Chrome, Firefox, or Safari.
+- OpenCV Python (pip install opencv-python)
+- Python SocketIO (pip install python-socketio)
+- Requests (pip install requests)
+- Websocket Client (pip install websocket-client)
 
 ## Installation & Running the Application
 
@@ -15,7 +19,7 @@ Before running the application, ensure that you have the following installed:
 
    - Open your preferred Code Editor (I recommend using VS Code).
    - Click `Terminal` -> `New Terminal`.
-   - Run the command `git clone https://github.com/your-username/Snapchat-Face-Filter.git` in the Terminal.
+   - Run the command `git clone https://github.com/ayush4460/Snapchat-Face-Filter.git` in the Terminal.
    - Git will start cloning the repository to your local machine.
    - Once the cloning process is complete, you will have a local copy of the repository in the specified directory.
    - Navigate to the project directory: `cd Snapchat-Face-Filter`.
@@ -24,13 +28,14 @@ Before running the application, ensure that you have the following installed:
 
    - Open a terminal or command prompt.
    - Navigate to the project directory: `cd Snapchat-Face-Filter`.
-   - Run the command `python a.py`.
+   - Run the command `python a.py`or directly run the python file.
    - This will start the Python script and open the camera with applied face filters.
 
 3. **Open the web page:**
 
    - Open a web browser (Chrome, Firefox, or Safari).
-   - In the address bar, enter the path to the `index.html` file located in the cloned repository, e.g., `file:///path/to/Snapchat-Face-Filter/index.html`.
+   - In the address bar, enter the path to the `index.html` file located in the cloned repository, e.g., `file://`/path/to/Snapchat-Face-Filter`/index.html`.
+   - If u have Live Server extension on VS Code just click "Go Live" present on the bottom right.
    - The web page will open, displaying the available face filters.
 
 4. **Select and apply filters:**
@@ -61,5 +66,10 @@ To contribute:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+
+## Code of Conduct
+
+[Code of Conduct](CODE_OF_CONDUCT)
 
 Feel free to update the content of this README file to match your project structure and provide additional information as needed.
