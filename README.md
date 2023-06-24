@@ -8,10 +8,10 @@ Before running the application, ensure that you have the following installed:
 
 - Python3: [Download and install Python](https://www.python.org/downloads/)
 - Web browser: Any modern web browser like Chrome, Firefox, or Safari.
-- OpenCV Python (`pip install opencv-python`)
-- Python SocketIO (`pip install python-socketio`)
-- Requests (`pip install requests`)
-- Websocket Client (`pip install websocket-client`)
+- OpenCV Python: `pip install opencv-python`
+- Python SocketIO: `pip install python-socketio`
+- Requests: `pip install requests`
+- Websocket Client: `pip install websocket-client`
 
 ## Installation & Running the Application
 
