@@ -79,6 +79,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Security Policy
 
-Go throught the [Security Policy](SECURITY) for this Project
+Go through the [Security Policy](SECURITY) of this Project
 
 Feel free to update the content of this README file to match your project structure and provide additional information as needed.
