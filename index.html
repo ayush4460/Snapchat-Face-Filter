@@ -1,470 +1,462 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Filter Selector</title>
+    <link rel="icon" href="./Images/favicon.png" type="image/x-icon" />
 
-<head>
-  <title>Filter Selector</title>
-  <link rel="icon" href="./Images/favicon.png" type="image/x-icon">
+    <!-- Bootstrap CSS  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-  <style>
-    /* CSS for the image container and images */
-    body {
-      margin: 0;
-      padding: 0;
-      flex-direction: column;
-      /* justify-content: space-between; */
-      background-color: #f1f1f1;
-      background-image: url('./Images/filter_bg.avif');
-    background-size: cover;
-
-    background-position: center;
-    background-repeat: no-repeat;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.508); /* Adjust the opacity value here */
-    z-index: -2;
-  }
-
-    #image-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* border: 1px solid red; */
-      width: 1000px;
-      /* Adjust the container width as needed */
-      height: 500px;
-      /* overflow: hidden; */
-    }
-
-    .image {
-      opacity: 0.3;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      height: 100%;
-      transition: opacity 0.5s ease;
-      width: 180px;
-      height: auto;
-      border-radius: 50%;
-      overflow: initial;
-      z-index: 0;
-      margin-right: 10px;
-    }
-
-    .image.center {
-      opacity: 1;
-      border-radius: 50%;
-      width: 250px;
-      z-index: 1;
-    }
-
-    .image.img1 button.active {
-      background-color: #282828;
-    }
-
-    .image.img2 button.active {
-      background-color: #e1d9d9;
-    }
-
-    .image.img3 button.active {
-      background-color: #fee9f8b4;
-    }
-
-
-
-    .image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .image button {
-      width: 300px;
-      height: 300px;
-      border: none;
-      border-radius: 50%;
-      /* Make the buttons round */
-      overflow: hidden;
-      /* Hide any overflowing content within the rounded shape */
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgb(243, 243, 219);
-    }
-
-    .image button.active {
-      border: 5px solid rgb(0, 0, 0);
-    }
-
-    .image img {
-      width: 150px;
-      height: 200px;
-      object-fit: contain;
-    }
-
-    .timer-container {
-      text-align: center;
-      margin-bottom: 100px;
-    }
-
-    #timer {
-      font-family: 'Arial', sans-serif;
-      font-size: 70px;
-      font-weight: bold;
-      color: #333333;
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
+    <!-- CSS -->
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        flex-direction: column;
+        background-color: #f1f1f1;
+        background-image: url("./Images/filter_bg.avif");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      50% {
-        transform: scale(1.1);
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.508);
+        z-index: -2;
       }
 
-      100% {
-        transform: scale(1);
-      }
-    }
-
-
-    .capture-button {
-      font-family: 'Arial', sans-serif;
-      font-size: 60px;
-      font-weight: bold;
-      padding: 20px 40px;
-      border-radius: 10px;
-      background-color: #002244;
-      /* Dark navy blue */
-      color: white;
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      margin-top: 50px;
-    }
-
-    #image-container {
-  position: relative;
-}
-
-/* #image-container::before {
-  content: "";
-  background-image: url('https://wallpapers.com/images/hd/snapchat-pattern-yellow-aesthetic-1ypj10atufg4bbcl.jpg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.2;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-} */
-
-
-    #capture-msg,
-    #experience-msg {
-      text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-      font-family: 'Arial', sans-serif;
-      font-size: 40px;
-      font-weight: bold;
-      color: #002244;
-      /* Dark navy blue */
-      text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-      visibility: hidden;
-      animation: fadeinout 20s forwards;
-      animation-delay: 1s;
-      margin-top: 20px;
-      
-    }
-
-    @keyframes fadeinout {
-      0% {
-        opacity: 0;
-        visibility: hidden;
+      #image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1000px;
+        height: 500px;
+        /* overflow: hidden; */
       }
 
-      10% {
+      .image {
+        opacity: 0.3;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+        transition: opacity 0.5s ease;
+        width: 180px;
+        height: auto;
+        border-radius: 50%;
+        overflow: initial;
+        z-index: 0;
+        margin-right: 10px;
+      }
+
+      .image.center {
         opacity: 1;
-        visibility: visible;
+        border-radius: 50%;
+        width: 250px;
+        z-index: 1;
       }
 
-      90% {
-        opacity: 1;
-        visibility: visible;
+      .image.img1 button.active {
+        background-color: #282828;
       }
 
-      100% {
-        opacity: 0;
+      .image.img2 button.active {
+        background-color: #e1d9d9;
+      }
+
+      .image.img3 button.active {
+        background-color: #fee9f8b4;
+      }
+
+      .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image button {
+        width: 300px;
+        height: 300px;
+        border: none;
+        border-radius: 50%;
+        overflow: hidden;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(243, 243, 219);
+      }
+
+      .image button.active {
+        border: 5px solid rgb(0, 0, 0);
+      }
+
+      .image img {
+        width: 150px;
+        height: 200px;
+        object-fit: contain;
+      }
+
+      .timer-container {
+        text-align: center;
+        margin-bottom: 100px;
+      }
+
+      #timer {
+        font-family: "Arial", sans-serif;
+        font-size: 70px;
+        font-weight: bold;
+        color: #333333;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.1);
+        }
+
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .capture-button {
+        font-family: "Arial", sans-serif;
+        font-size: 60px;
+        font-weight: bold;
+        padding: 20px 40px;
+        border-radius: 10px;
+        background-color: #002244;
+        color: white;
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin-top: 50px;
+      }
+
+      #image-container {
+        position: relative;
+      }
+
+      #capture-msg,
+      #experience-msg {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: "Arial", sans-serif;
+        font-size: 40px;
+        font-weight: bold;
+        color: #002244;
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
         visibility: hidden;
+        animation: fadeinout 20s forwards;
+        animation-delay: 1s;
+        margin-top: 20px;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <div class="timer-container" style="margin-bottom: 300px;">
-    <h1 id="timer">2:00</h1>
-    <div id="end-msg"></div>
-  </div>
+      @keyframes fadeinout {
+        0% {
+          opacity: 0;
+          visibility: hidden;
+        }
 
+        10% {
+          opacity: 1;
+          visibility: visible;
+        }
 
-  <div id="image-container">
-    <div class="image img2" data-filter-id="2">
-      <button>
-        <img src="Images/2.png" alt="Image 2">
-      </button>
-    </div>
-    <div class="image center img1" data-filter-id="4">
-      <button class="active">
-        <img src="Images/1.png" alt="Image 1">
-      </button>
-    </div>
-    <div class="image img3" data-filter-id="3">
-      <button>
-        <img src="Images/3.png" alt="Image 3">
-      </button>
-    </div>
-  </div>
-  
+        90% {
+          opacity: 1;
+          visibility: visible;
+        }
 
-  <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
-    <button class="capture-button"  id="capture-button"  onclick="captureImage()">Capture</button>
-    <div id="capture-msg"></div>
-    <div id="experience-msg"></div>
-  </div>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-    crossorigin="anonymous"></script>
-</body>
-<script>
- // JavaScript for image swiping
-const container = document.getElementById('image-container');
-const images = container.getElementsByClassName('image');
-const numImages = images.length;
-let centerIndex = 1; // Set the initial center image index to 1
-
-function makeImageActive(index) {
-  for (let i = 0; i < images.length; i++) {
-    images[i].classList.remove('center');
-    images[i].querySelector('button').classList.remove('active');
-    images[i].style.zIndex = 0; // Reset the z-index of all images
-  }
-  images[index].classList.add('center');
-  images[index].querySelector('button').classList.add('active');
-  images[index].style.zIndex = 1; // Set the z-index of the center image
-
-  // Call the API based on the selected filterId
-  const filterId = images[index].dataset.filterId;
-  const deviceId = '111'; // Replace with the actual device ID
-  callFilterAPI(deviceId, filterId);
-}
-
-// Click event listener to make an image active when clicked
-container.addEventListener('click', function (event) {
-  const clickedImage = event.target.closest('.image');
-  if (clickedImage) {
-    const index = Array.from(images).indexOf(clickedImage);
-    makeImageActive(index);
-  }
-});
-
-  // Swipe functionality
-  container.addEventListener('touchstart', handleTouchStart, false);
-  container.addEventListener('touchmove', handleTouchMove, false);
-
-  let xDown = null;
-  let yDown = null;
-
-  function handleTouchStart(event) {
-    const firstTouch = event.touches[0];
-    xDown = firstTouch.clientX;
-    yDown = firstTouch.clientY;
-  }
-
-  function handleTouchMove(event) {
-    if (!xDown || !yDown) {
-      return;
-    }
-
-    const xUp = event.touches[0].clientX;
-    const yUp = event.touches[0].clientY;
-
-    const xDiff = xDown - xUp;
-    const yDiff = yDown - yUp;
-
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff > 0) {
-        swipeImage('left');
-      } else {
-        swipeImage('right');
+        100% {
+          opacity: 0;
+          visibility: hidden;
+        }
       }
+    </style>
+  </head>
+
+  <!-- Body -->
+  <body>
+    <div class="timer-container" style="margin-bottom: 300px">
+      <h1 id="timer">2:00</h1>
+      <div id="end-msg"></div>
+    </div>
+
+    <div id="image-container">
+      <div class="image img2" data-filter-id="2">
+        <button>
+          <img src="Images/2.png" alt="Image 2" />
+        </button>
+      </div>
+      <div class="image center img1" data-filter-id="4">
+        <button class="active">
+          <img src="Images/1.png" alt="Image 1" />
+        </button>
+      </div>
+      <div class="image img3" data-filter-id="3">
+        <button>
+          <img src="Images/3.png" alt="Image 3" />
+        </button>
+      </div>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 250px;
+        margin-bottom: 20px;
+      "
+    >
+      <button
+        class="capture-button"
+        id="capture-button"
+        onclick="captureImage()"
+      >
+        Capture
+      </button>
+      <div id="capture-msg"></div>
+      <div id="experience-msg"></div>
+    </div>
+  </body>
+
+  <!-- JavaScript -->
+  <script>
+    // JavaScript for image swiping
+    const container = document.getElementById("image-container");
+    const images = container.getElementsByClassName("image");
+    const numImages = images.length;
+    let centerIndex = 1; // Set the initial center image index to 1
+
+    function makeImageActive(index) {
+      for (let i = 0; i < images.length; i++) {
+        images[i].classList.remove("center");
+        images[i].querySelector("button").classList.remove("active");
+        images[i].style.zIndex = 0; // Reset the z-index of all images
+      }
+      images[index].classList.add("center");
+      images[index].querySelector("button").classList.add("active");
+      images[index].style.zIndex = 1; // Set the z-index of the center image
+
+      // Call the API based on the selected filterId
+      const filterId = images[index].dataset.filterId;
+      const deviceId = "111";
+      callFilterAPI(deviceId, filterId);
     }
 
-    xDown = null;
-    yDown = null;
-  }
-
-  function swipeImage(direction) {
-  images[centerIndex].classList.remove('center');
-  images[centerIndex].querySelector('button').classList.remove('active');
-  images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
-
-  if (direction === 'left') {
-    centerIndex = (centerIndex + 1) % numImages;
-  } else {
-    centerIndex = (centerIndex - 1 + numImages) % numImages;
-  }
-
-  images[centerIndex].classList.add('center');
-  images[centerIndex].querySelector('button').classList.add('active');
-  images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
-
-  // Call the API based on the selected filterId
-  const filterId = images[centerIndex].dataset.filterId;
-  const deviceId = '111'; // Replace with the actual device ID
-  callFilterAPI(deviceId, filterId);
-}
-
- 
-  function callFilterAPI(deviceId, filterId) {
-  // Make a request to the backend API
-  fetch(`http://192.168.29.138:3000/api/filter/${deviceId}/${filterId}`)
-    .then(response => {
-      if (response.ok) {
-        console.log(`Filter API called for deviceId: ${deviceId}, filterId: ${filterId}`);
-      } else {
-        console.error('Failed to call the Filter API');
+    // Click event listener to make an image active when clicked
+    container.addEventListener("click", function (event) {
+      const clickedImage = event.target.closest(".image");
+      if (clickedImage) {
+        const index = Array.from(images).indexOf(clickedImage);
+        makeImageActive(index);
       }
-    })
-    .catch(error => {
-      console.error('Error calling the Filter API:', error);
     });
-}
 
-  var seconds = 120;
-  var countdown = setInterval(function () {
-    var timerElement = document.getElementById('timer');
-    timerElement.innerText = formatTime(seconds);
+    // Swipe functionality
+    container.addEventListener("touchstart", handleTouchStart, false);
+    container.addEventListener("touchmove", handleTouchMove, false);
 
-    if (seconds <= 30) {
-      timerElement.style.color = '#fe0000';
-      timerElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
+    let xDown = null;
+    let yDown = null;
+
+    function handleTouchStart(event) {
+      const firstTouch = event.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
     }
 
-    if (seconds <= 0) {
-      clearInterval(countdown);
-      timerElement.innerText = 'Time up! 😔';
-      timerElement.style.color = 'black';
-      timerElement.style.textShadow = 'none';
-      var endMsgElement = document.getElementById('end-msg');
-      endMsgElement.innerHTML = 'Please try again!';
-      endMsgElement.style.fontFamily = 'Arial, sans-serif';
-      endMsgElement.style.fontSize = '60px';
-      endMsgElement.style.fontWeight = 'bold';
-      endMsgElement.style.color = '#333333';
-      endMsgElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
+    function handleTouchMove(event) {
+      if (!xDown || !yDown) {
+        return;
+      }
 
-          // Hide the capture button
-    var captureButton = document.getElementById('capture-button');
-    captureButton.style.display = 'none';
-  
+      const xUp = event.touches[0].clientX;
+      const yUp = event.touches[0].clientY;
+
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+        if (xDiff > 0) {
+          swipeImage("left");
+        } else {
+          swipeImage("right");
+        }
+      }
+
+      xDown = null;
+      yDown = null;
     }
-    
 
-    seconds--;
-  }, 100);
+    function swipeImage(direction) {
+      images[centerIndex].classList.remove("center");
+      images[centerIndex].querySelector("button").classList.remove("active");
+      images[centerIndex].style.zIndex = 0; // Reset the z-index of the current center image
 
-  function formatTime(seconds) {
-    var minutes = Math.floor(seconds / 60);
-    var remainingSeconds = seconds % 60;
-    return minutes.toString().padStart(2, '0') + ':' + remainingSeconds.toString().padStart(2, '0');
-  }
+      if (direction === "left") {
+        centerIndex = (centerIndex + 1) % numImages;
+      } else {
+        centerIndex = (centerIndex - 1 + numImages) % numImages;
+      }
 
-  function captureImage() {
-  var captureButton = document.querySelector('.capture-button');
-  captureButton.disabled = true;
+      images[centerIndex].classList.add("center");
+      images[centerIndex].querySelector("button").classList.add("active");
+      images[centerIndex].style.zIndex = 1; // Set the z-index of the new center image
 
-  var captureMsg = document.getElementById('capture-msg');
-  var experienceMsg = document.getElementById('experience-msg');
+      // Call the API based on the selected filterId
+      const filterId = images[centerIndex].dataset.filterId;
+      const deviceId = "111";
+      callFilterAPI(deviceId, filterId);
+    }
 
-  captureMsg.innerHTML = 'Image capture in progress... 🎞 ';
-  captureMsg.style.visibility = 'hidden';
+    function callFilterAPI(deviceId, filterId) {
+      // Make a request to the backend API
+      fetch(`http://192.168.29.138:3000/api/filter/${deviceId}/${filterId}`)
+        .then((response) => {
+          if (response.ok) {
+            console.log(
+              `Filter API called for deviceId: ${deviceId}, filterId: ${filterId}`
+            );
+          } else {
+            console.error("Failed to call the Filter API");
+          }
+        })
+        .catch((error) => {
+          console.error("Error calling the Filter API:", error);
+        });
+    }
 
-  // Call the API to capture the image
-  const deviceId = '111'; // Replace with the actual device ID
-  fetch(`http://192.168.29.138:3000/api/take_picture/${deviceId}`)
-    .then(response => {
-      if (response.ok) {
-        console.log('Image capture API called successfully');
-        // Wait for 3 seconds before hiding the capture message
-        setTimeout(function () {
-          captureMsg.style.animation = 'fadeout 1s forwards';
+    var seconds = 120;
+    var countdown = setInterval(function () {
+      var timerElement = document.getElementById("timer");
+      timerElement.innerText = formatTime(seconds);
 
-          // Wait for the fadeout animation to complete before showing the success message
+      if (seconds <= 30) {
+        timerElement.style.color = "#fe0000";
+        timerElement.style.textShadow = "3px 3px 6px rgba(0, 0, 0, 0.5)";
+      }
+
+      if (seconds <= 0) {
+        clearInterval(countdown);
+        timerElement.innerText = "Time up! 😔";
+        timerElement.style.color = "black";
+        timerElement.style.textShadow = "none";
+        var endMsgElement = document.getElementById("end-msg");
+        endMsgElement.innerHTML = "Please try again!";
+        endMsgElement.style.fontFamily = "Arial, sans-serif";
+        endMsgElement.style.fontSize = "60px";
+        endMsgElement.style.fontWeight = "bold";
+        endMsgElement.style.color = "#333333";
+        endMsgElement.style.textShadow = "3px 3px 6px rgba(0, 0, 0, 0.5)";
+
+        // Hide the capture button after timeout
+        var captureButton = document.getElementById("capture-button");
+        captureButton.style.display = "none";
+      }
+      seconds--;
+    }, 100);
+
+    function formatTime(seconds) {
+      var minutes = Math.floor(seconds / 60);
+      var remainingSeconds = seconds % 60;
+      return (
+        minutes.toString().padStart(2, "0") +
+        ":" +
+        remainingSeconds.toString().padStart(2, "0")
+      );
+    }
+
+    function captureImage() {
+      var captureButton = document.querySelector(".capture-button");
+      captureButton.disabled = true;
+
+      var captureMsg = document.getElementById("capture-msg");
+      var experienceMsg = document.getElementById("experience-msg");
+
+      captureMsg.innerHTML = "Image capture in progress... 🎞 ";
+      captureMsg.style.visibility = "hidden";
+
+      // Call the API to capture the image
+      const deviceId = "111";
+      fetch(`http://192.168.29.138:3000/api/take_picture/${deviceId}`)
+        .then((response) => {
+          if (response.ok) {
+            console.log("Image capture API called successfully");
+            // Wait for 4 seconds before hiding the capture message
+            setTimeout(function () {
+              captureMsg.style.animation = "fadeout 1s forwards";
+
+              // Wait for the fadeout animation to complete before showing the success message
+              setTimeout(function () {
+                // captureMsg.style.visibility = 'hidden';
+                experienceMsg.innerHTML =
+                  "Image captured successfully  ✔ <br>Hope you had a great experience 😃";
+                experienceMsg.style.visibility = "visible";
+                experienceMsg.style.animation = "fadein 2s forwards";
+              }, 1000);
+            }, 4000);
+          } else {
+            console.error("Failed to call the Image capture API");
+            // Display error message
+            captureMsg.style.animation = "fadeout 1s forwards";
+
+            // Wait for the fadeout animation to complete before hiding the capture message
+            setTimeout(function () {
+              captureMsg.style.visibility = "hidden";
+              experienceMsg.innerHTML =
+                "Failed to capture image. Please try again.";
+              experienceMsg.style.visibility = "visible";
+              experienceMsg.style.animation = "fadeinout 20s forwards";
+            }, 1000);
+          }
+        })
+        .catch((error) => {
+          console.error("Error calling the Image capture API:", error);
+          // Display error message
+          captureMsg.style.animation = "fadeout 1s forwards";
+
+          // Wait for the fadeout animation to complete before hiding the capture message
           setTimeout(function () {
-            // captureMsg.style.visibility = 'hidden';
-            experienceMsg.innerHTML = 'Image captured successfully  ✔ <br>Hope you had a great experience 😃';
-            experienceMsg.style.visibility = 'visible';
-            experienceMsg.style.animation = 'fadein 2s forwards';
+            captureMsg.style.visibility = "hidden";
+            experienceMsg.innerHTML =
+              "Failed to capture image. Please try again.";
+            experienceMsg.style.visibility = "visible";
+            experienceMsg.style.animation = "fadeinout 20s forwards";
           }, 1000);
-        }, 4000);
-      } else {
-        console.error('Failed to call the Image capture API');
-        // Display error message
-        captureMsg.style.animation = 'fadeout 1s forwards';
-
-        // Wait for the fadeout animation to complete before hiding the capture message
-        setTimeout(function () {
-          captureMsg.style.visibility = 'hidden';
-          experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
-          experienceMsg.style.visibility = 'visible';
-          experienceMsg.style.animation = 'fadeinout 20s forwards';
-        }, 1000);
-      }
-    })
-    .catch(error => {
-      console.error('Error calling the Image capture API:', error);
-      // Display error message
-      captureMsg.style.animation = 'fadeout 1s forwards';
-
-      // Wait for the fadeout animation to complete before hiding the capture message
-      setTimeout(function () {
-        captureMsg.style.visibility = 'hidden';
-        experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
-        experienceMsg.style.visibility = 'visible';
-        experienceMsg.style.animation = 'fadeinout 20s forwards';
-      }, 1000);
-    })
-    .finally(() => {
-      setTimeout(function () {
-        experienceMsg.style.visibility = 'hidden';
-        experienceMsg.style.animation = '';
-        captureButton.disabled = false;
-      }, 5000);
-    });
-}
-
-</script>
-
+        })
+        .finally(() => {
+          setTimeout(function () {
+            experienceMsg.style.visibility = "hidden";
+            experienceMsg.style.animation = "";
+            captureButton.disabled = false;
+          }, 5000);
+        });
+    }
+  </script>
 </html>
