@@ -24,8 +24,7 @@ def ws_connect():
     sio = socketio.Client()
     while True:
         try:
-            # sio.connect('http://ws.marwiztech.com')
-            sio.connect('http://20.204.100.126:3000')
+            sio.connect('http://localhost:3000')
             break
         except:
             print("Connection failed")
