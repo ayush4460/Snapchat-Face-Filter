@@ -48,6 +48,9 @@ Before running the application, ensure that you have the following installed:
    - Once you are satisfied with the selected filter, click the "Capture" button on the web page.
    - The captured image will be saved in the "image" folder of the repository.
 
+NOTE:
+- Note that you need to open both the frontend and backend code on Local Machine ie. both should have a HTTP connection
+<br>
 Feel free to explore and modify the code to customize the filters and add new functionalities to enhance your Snapchat face filter experience.
 
 ## Contributing
