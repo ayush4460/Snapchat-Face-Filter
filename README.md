@@ -81,11 +81,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Community Guidelines( Code of Conduct )
 
-[Code of Conduct](CODE_OF_CONDUCT)
+[Code of Conduct](CODE_OF_CONDUCT.md)
 
 
 ## Security Policy
 
-Go through the [Security Policy](SECURITY) of this Project
+Go through the [Security Policy](SECURITY.md) of this Project
 
 Feel free to update the content of this README file to match your project structure and provide additional information as needed.
