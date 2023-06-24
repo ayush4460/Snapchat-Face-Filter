@@ -337,7 +337,7 @@
 
     function callFilterAPI(deviceId, filterId) {
       // Make a request to the backend API
-      fetch(`http://192.168.29.138:3000/api/filter/${deviceId}/${filterId}`)
+      fetch(`http://localhost:3000/api/filter/${deviceId}/${filterId}`)
         .then((response) => {
           if (response.ok) {
             console.log(
@@ -404,7 +404,7 @@
 
       // Call the API to capture the image
       const deviceId = "111";
-      fetch(`http://192.168.29.138:3000/api/take_picture/${deviceId}`)
+      fetch(`http://localhost:3000/api/take_picture/${deviceId}`)
         .then((response) => {
           if (response.ok) {
             console.log("Image capture API called successfully");
