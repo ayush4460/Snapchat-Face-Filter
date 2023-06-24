@@ -68,7 +68,7 @@ To contribute:
 This project is licensed under the [MIT License](LICENSE).
 
 
-## Code of Conduct
+## Community Guidelines( Code of Conduct )
 
 [Code of Conduct](CODE_OF_CONDUCT)
 
