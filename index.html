@@ -3,7 +3,7 @@
 
 <head>
   <title>Filter Selector</title>
-  <link rel="icon" href="./Images/logo_marwiz.jpg" type="image/x-icon">
+  <link rel="icon" href="./Images/favicon.png" type="image/x-icon">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -156,20 +156,6 @@
       cursor: pointer;
       margin-top: 50px;
     }
-    .download-button {
-      font-family: 'Arial', sans-serif;
-      font-size: 60px;
-      font-weight: bold;
-      padding: 20px 40px;
-      border-radius: 10px;
-      background-color: #002244;
-      /* Dark navy blue */
-      color: white;
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      margin-top: 50px;
-    }
-
 
     #image-container {
   position: relative;
@@ -192,6 +178,11 @@
 
     #capture-msg,
     #experience-msg {
+      text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
       font-family: 'Arial', sans-serif;
       font-size: 40px;
       font-weight: bold;
@@ -202,7 +193,7 @@
       animation: fadeinout 20s forwards;
       animation-delay: 1s;
       margin-top: 20px;
-      /* Adjust the margin-top as needed */
+      
     }
 
     @keyframes fadeinout {
@@ -256,11 +247,11 @@
   
 
   <div style="display: flex; flex-direction: column; align-items: center; margin-top: 250px;margin-bottom: 20px;">
-    <button class="capture-button" onclick="captureImage()">Capture</button>
+    <button class="capture-button"  id="capture-button"  onclick="captureImage()">Capture</button>
     <div id="capture-msg"></div>
     <div id="experience-msg"></div>
   </div>
-  <button class="download-button">⬇ Download</button>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -355,58 +346,7 @@ container.addEventListener('click', function (event) {
   callFilterAPI(deviceId, filterId);
 }
 
-var downloadButton = document.querySelector('.download-button');
-
-downloadButton.addEventListener('click', function() {
-  // Call the API to fetch the latest image filename
-  fetch('http://192.168.29.138:3000/api/images/latest', {
-    method: 'GET',
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log('Latest image filename API called successfully');
-      // Return the filename from the API response
-      return response.text();
-    } else {
-      console.error('Failed to call the Latest image filename API');
-      // Display error message or handle the error
-      throw new Error('Latest image filename API failed');
-    }
-  })
-  .then(filename => {
-    // Call the API to download the image with the obtained filename
-    fetch(`http://192.168.29.138:3000/api/images/${filename}`, {
-      method: 'GET',
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log('Image download API called successfully');
-        // Perform any necessary actions after successful download
-        return response.blob();
-      } else {
-        console.error('Failed to call the Image download API');
-        // Display error message or handle the error
-        throw new Error('Image download API failed');
-      }
-    })
-    .then(blob => {
-      // Create a temporary download link
-      var downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = filename;
-      downloadLink.click();
-    })
-    .catch(error => {
-      console.error('Error calling the Image download API:', error);
-      // Display error message or handle the error
-    });
-  })
-  .catch(error => {
-    console.error('Error calling the Latest image filename API:', error);
-    // Display error message or handle the error
-  });
-});
-  
+ 
   function callFilterAPI(deviceId, filterId) {
   // Make a request to the backend API
   fetch(`http://192.168.29.138:3000/api/filter/${deviceId}/${filterId}`)
@@ -421,10 +361,6 @@ downloadButton.addEventListener('click', function() {
       console.error('Error calling the Filter API:', error);
     });
 }
-
-
-
-
 
   var seconds = 120;
   var countdown = setInterval(function () {
@@ -448,10 +384,16 @@ downloadButton.addEventListener('click', function() {
       endMsgElement.style.fontWeight = 'bold';
       endMsgElement.style.color = '#333333';
       endMsgElement.style.textShadow = '3px 3px 6px rgba(0, 0, 0, 0.5)';
+
+          // Hide the capture button
+    var captureButton = document.getElementById('capture-button');
+    captureButton.style.display = 'none';
+  
     }
+    
 
     seconds--;
-  }, 1000);
+  }, 100);
 
   function formatTime(seconds) {
     var minutes = Math.floor(seconds / 60);
@@ -467,7 +409,7 @@ downloadButton.addEventListener('click', function() {
   var experienceMsg = document.getElementById('experience-msg');
 
   captureMsg.innerHTML = 'Image capture in progress... 🎞 ';
-  captureMsg.style.visibility = 'visible';
+  captureMsg.style.visibility = 'hidden';
 
   // Call the API to capture the image
   const deviceId = '111'; // Replace with the actual device ID
@@ -478,38 +420,41 @@ downloadButton.addEventListener('click', function() {
         // Wait for 3 seconds before hiding the capture message
         setTimeout(function () {
           captureMsg.style.animation = 'fadeout 1s forwards';
-          // Wait for the fadeout animation to complete before hiding the capture message
+
+          // Wait for the fadeout animation to complete before showing the success message
           setTimeout(function () {
-            captureMsg.style.visibility = 'hidden';
+            // captureMsg.style.visibility = 'hidden';
+            experienceMsg.innerHTML = 'Image captured successfully  ✔ <br>Hope you had a great experience 😃';
+            experienceMsg.style.visibility = 'visible';
+            experienceMsg.style.animation = 'fadein 2s forwards';
           }, 1000);
-          experienceMsg.innerHTML = 'Image captured successfully  ✔ <br>Hope you had a great experience 😃';
-          experienceMsg.style.visibility = 'visible';
-          experienceMsg.style.animation = 'fadeinout 20s forwards';
-        }, 3000);
+        }, 4000);
       } else {
         console.error('Failed to call the Image capture API');
         // Display error message
         captureMsg.style.animation = 'fadeout 1s forwards';
+
         // Wait for the fadeout animation to complete before hiding the capture message
         setTimeout(function () {
           captureMsg.style.visibility = 'hidden';
+          experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
+          experienceMsg.style.visibility = 'visible';
+          experienceMsg.style.animation = 'fadeinout 20s forwards';
         }, 1000);
-        experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
-        experienceMsg.style.visibility = 'visible';
-        experienceMsg.style.animation = 'fadeinout 20s forwards';
       }
     })
     .catch(error => {
       console.error('Error calling the Image capture API:', error);
       // Display error message
       captureMsg.style.animation = 'fadeout 1s forwards';
+
       // Wait for the fadeout animation to complete before hiding the capture message
       setTimeout(function () {
         captureMsg.style.visibility = 'hidden';
+        experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
+        experienceMsg.style.visibility = 'visible';
+        experienceMsg.style.animation = 'fadeinout 20s forwards';
       }, 1000);
-      experienceMsg.innerHTML = 'Failed to capture image. Please try again.';
-      experienceMsg.style.visibility = 'visible';
-      experienceMsg.style.animation = 'fadeinout 20s forwards';
     })
     .finally(() => {
       setTimeout(function () {
