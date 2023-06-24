@@ -34,7 +34,7 @@ Before running the application, ensure that you have the following installed:
 3. **Open the web page:**
 
    - Open a web browser (Chrome, Firefox, or Safari).
-   - In the address bar, enter the path to the `index.html` file located in the cloned repository, e.g., `file://`/path/to/Snapchat-Face-Filter`/index.html`.
+   - In the address bar, enter the path to the `index.html` file located in the cloned repository, e.g., `file://"/path/to/Snapchat-Face-Filter"/index.html`.
    - If u have Live Server extension on VS Code just click "Go Live" present on the bottom right.
    - The web page will open, displaying the available face filters.
 
