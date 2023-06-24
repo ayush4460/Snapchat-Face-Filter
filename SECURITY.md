@@ -13,15 +13,15 @@ This project follows a versioning scheme for providing security updates. The fol
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within this project, please send an email to ayushgzala@gmail.com. Include a detailed description of the vulnerability and steps to reproduce it, if possible. We take security issues seriously and will work diligently to address and fix any reported vulnerabilities.
+To report a vulnerability, please follow these steps:
 
-Once a vulnerability is reported, you can expect the following:
-
-- An initial response within 48 hours, acknowledging that the report has been received.
-- Regular updates on the progress of the investigation and the steps being taken to address the vulnerability.
-- A notification when the vulnerability has been resolved and the fix is available.
-- If the vulnerability is accepted, appropriate credit will be given to the reporter.
-- We appreciate your contributions to the security of this project and thank you for helping us maintain a secure environment.
+1) Create a new issue in the ISSUES with a clear and descriptive title.
+2) Provide detailed information about the vulnerability, including steps to reproduce, potential impact, and any related resources or examples.
+3) If possible, include any relevant code snippets or files that demonstrate the vulnerability.
+4) We will review the reported vulnerability and provide updates on the issue as soon as possible.
+5) Once the vulnerability is accepted and confirmed, we will work towards addressing it and releasing a security update.
+6) We appreciate your responsible disclosure and cooperation in helping to ensure the security of the project.
 
 <br>
+Thank you for your contribution to the security of our project!
 Feel free to adjust the versions and add any additional information as needed.
