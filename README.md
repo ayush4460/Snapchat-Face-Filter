@@ -50,6 +50,7 @@ Before running the application, ensure that you have the following installed:
 
 NOTE:
 - Note that you need to open both the frontend and backend code on Local Machine ie. both should have a HTTP connection
+- Don't forget to run the backend files present in my `Snapchat-Face-Filter-Backend` repository
 <br>
 Feel free to explore and modify the code to customize the filters and add new functionalities to enhance your Snapchat face filter experience.
 
